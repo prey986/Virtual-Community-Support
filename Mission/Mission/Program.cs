@@ -36,6 +36,9 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IMissionThemeRepository, MissionThemeRepository>();
 builder.Services.AddScoped<IMissionThemeService, MissionThemeService>();
 
+builder.Services.AddScoped<IMissionSkillRepository, MissionSkillRepository>();
+builder.Services.AddScoped<IMissionSkillServices, MissionSkillServices>();
+
 
 var app = builder.Build();
 

@@ -9,6 +9,7 @@ namespace Mission.Entities.Context
     {
         public DbSet<User> User { get; set; }
         public DbSet<MissionTheme> MissionThemes { get; set; }
+        public DbSet<MissionSkill> MissionSkills { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
