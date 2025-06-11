@@ -10,5 +10,6 @@ namespace Mission.Repositories.IRepositories
         Task<List<MissionSkillViewModel>> GetAllMissionSkill();
         Task<MissionSkillViewModel?> GetMissionSkillById(int missionSkillId);
         Task<bool> UpdateMissionSkill(MissionSkill missionSkill);
+        String GetMissionSkills(string skillIds);
     }
 }

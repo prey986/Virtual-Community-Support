@@ -5,6 +5,8 @@ using Mission.Repositories.Helpers;
 using Mission.Repositories.Interface;
 using Mission.Repositories.IRepositories;
 using Mission.Repositories.Repositories;
+using Mission.Service.IServices;
+using Mission.Service.Services;
 using Mission.Services;
 using Mission.Services.IServices;
 using Mission.Services.Services;
@@ -38,6 +40,12 @@ builder.Services.AddScoped<IMissionThemeService, MissionThemeService>();
 
 builder.Services.AddScoped<IMissionSkillRepository, MissionSkillRepository>();
 builder.Services.AddScoped<IMissionSkillServices, MissionSkillServices>();
+
+builder.Services.AddScoped<ICommonService, CommonService>();
+builder.Services.AddScoped<ICommonRepository, CommonRepository>();
+
+builder.Services.AddScoped<IMissionService, MissionService>();
+builder.Services.AddScoped<IMissionRepository, MissionRepository>();
 
 
 var app = builder.Build();

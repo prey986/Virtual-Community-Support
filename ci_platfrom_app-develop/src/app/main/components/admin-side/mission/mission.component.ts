@@ -84,7 +84,7 @@ export class MissionComponent implements OnInit, OnDestroy {
       (data: any) => {
         if (data.result == 1) {
           //this.toastr.success(data.data);
-          this.toast.success({ detail: "SUCCESS", summary: data.data, duration: APP_CONFIG.toastDuration })
+          this.toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration })
           setTimeout(() => {
             this.deleteModal.hide()
             window.location.reload()

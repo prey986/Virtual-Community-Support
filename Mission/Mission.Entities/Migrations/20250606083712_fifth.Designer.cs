@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mission.Entities.Context;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mission.Entities.Migrations
 {
     [DbContext(typeof(MissionDbContext))]
-    partial class MissionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250606083712_fifth")]
+    partial class fifth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,47 +206,6 @@ namespace Mission.Entities.Migrations
                     b.ToTable("MissionThemes");
                 });
 
-            modelBuilder.Entity("Mission.Entities.MissionApplication", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AppliedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("MissionId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Seats")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MissionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("MissionApplication");
-                });
-
             modelBuilder.Entity("Mission.Entities.Missions", b =>
                 {
                     b.Property<int>("Id")
@@ -267,11 +229,27 @@ namespace Mission.Entities.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("MissionAvailability")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("MissionDescription")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("MissionDocuments")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("MissionImages")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MissionOrganisationDetail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MissionOrganisationName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -283,6 +261,14 @@ namespace Mission.Entities.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("MissionTitle")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MissionType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MissionVideoUrl")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -382,25 +368,6 @@ namespace Mission.Entities.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Mission.Entities.MissionApplication", b =>
-                {
-                    b.HasOne("Mission.Entities.Missions", "Mission")
-                        .WithMany("MissionApplications")
-                        .HasForeignKey("MissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Mission.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mission");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Mission.Entities.Missions", b =>
                 {
                     b.HasOne("Mission.Entities.City", "City")
@@ -436,11 +403,6 @@ namespace Mission.Entities.Migrations
             modelBuilder.Entity("Mission.Entities.Country", b =>
                 {
                     b.Navigation("Missions");
-                });
-
-            modelBuilder.Entity("Mission.Entities.Missions", b =>
-                {
-                    b.Navigation("MissionApplications");
                 });
 #pragma warning restore 612, 618
         }

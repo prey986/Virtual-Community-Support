@@ -249,7 +249,7 @@ export class UpdateMissionComponent implements OnInit, OnDestroy {
         (data: any) => {
           if (data.result == 1) {
             //this.toastr.success(data.data);
-            this._toast.success({ detail: "SUCCESS", summary: data.data, duration: APP_CONFIG.toastDuration })
+            this._toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration })
             setTimeout(() => {
               this._router.navigate(["admin/mission"])
             }, 1000)

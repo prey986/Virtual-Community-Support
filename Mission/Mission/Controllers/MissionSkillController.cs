@@ -62,7 +62,7 @@ namespace Mission.Controllers
             return Ok(new ResponseResult() { Data = res, Result = ResponseStatus.Success, Message = "Updated Successfully" });
         }
         [HttpDelete]
-        [Route("DeleteMissionSkill{id:int}")]
+        [Route("DeleteMissionSkill/{id:int}")]
         public async Task<IActionResult> DeleteMissionSkill(int id)
         {
             var res = await _missionSkillServices.DeleteMissionSkill(id);

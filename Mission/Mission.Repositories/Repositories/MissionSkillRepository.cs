@@ -58,5 +58,13 @@ namespace Mission.Repositories.Repositories
             return true;
 
         }
+        public string GetMissionSkills(string skillIds)
+        {
+            List<string> skillIdList = skillIds.Split(",").ToList();
+
+            return string.Join(",", _missionDbContext.MissionSkills
+                .Where(ms => skillIdList.Contains(ms.Id.ToString()))
+                .Select(ms => ms.SkillName).ToList());
+        }
     }
 }

@@ -61,8 +61,9 @@ export class MissionskillComponent implements OnInit, OnDestroy {
   deleteSkillModal() {
     const deleteMissionSkillSubscribe = this._service.deleteMissionSkill(this.skillId).subscribe((data: any) => {
       if (data.result == 1) {
-        this._toast.success({ detail: "SUCCESS", summary: data.data, duration: APP_CONFIG.toastDuration });
+        this._toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration });
         this.closeDeleteSkillModal();
+        this.getMissionSkillList();
         setTimeout(() => {
           this._route.navigate(['admin/missionSkill']);
         }, 1000);

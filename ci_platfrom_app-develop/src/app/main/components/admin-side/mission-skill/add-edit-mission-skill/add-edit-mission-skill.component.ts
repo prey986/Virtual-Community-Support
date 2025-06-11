@@ -80,7 +80,7 @@ export class AddEditMissionSkillComponent implements OnInit, OnDestroy {
     const addMissionSkillSubscription = this._service.addMissionSkill(value).subscribe(
       (data: any) => {
         if (data.result == 1) {
-          this._toast.success({ detail: "SUCCESS", summary: data.data, duration: APP_CONFIG.toastDuration })
+          this._toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration })
           setTimeout(() => {
             this._router.navigate(["admin/missionSkill"])
           }, 1000)
@@ -97,7 +97,7 @@ export class AddEditMissionSkillComponent implements OnInit, OnDestroy {
     const updateMissionSkillSubscription = this._service.updateMissionSkill(value).subscribe(
       (data: any) => {
         if (data.result == 1) {
-          this._toast.success({ detail: "SUCCESS", summary: data.data, duration: APP_CONFIG.toastDuration })
+          this._toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration })
           setTimeout(() => {
             this._router.navigate(["admin/missionSkill"])
           }, 1000)

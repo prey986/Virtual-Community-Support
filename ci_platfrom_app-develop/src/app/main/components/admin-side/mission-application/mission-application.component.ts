@@ -56,7 +56,7 @@ export class MissionApplicationComponent implements OnInit, OnDestroy {
     const missionApplicationSubscription = this._service.missionApplicationApprove(value).subscribe(
       (data: any) => {
         if (data.result == 1) {
-          this._toast.success({ detail: "SUCCESS", summary: data.data, duration: APP_CONFIG.toastDuration });
+          this._toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration });
           setTimeout(() => {
             window.location.reload();
           }, 2000);
@@ -74,7 +74,7 @@ export class MissionApplicationComponent implements OnInit, OnDestroy {
     const missionApplicationDeleteSubscription = this._service.missionApplicationDelete(value).subscribe(
       (data: any) => {
         if (data.result == 1) {
-          this._toast.success({ detail: "SUCCESS", summary: data.data, duration: APP_CONFIG.toastDuration });
+          this._toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration });
           setTimeout(() => {
             window.location.reload();
           }, 2000);
