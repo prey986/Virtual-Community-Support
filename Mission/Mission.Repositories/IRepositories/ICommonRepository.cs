@@ -1,4 +1,5 @@
-﻿using Mission.Entities.Models.CommonModels;
+﻿using Mission.Entities;
+using Mission.Entities.Models.CommonModels;
 using System.Collections.Generic;
 
 namespace Mission.Repositories.IRepositories
@@ -18,5 +19,7 @@ namespace Mission.Repositories.IRepositories
         List<DropDownResponseModel> MissionSkillList();
 
         List<DropDownResponseModel> MissionTitleList();
+        List<DropDownResponseModel> GetUserSkill(int userId);
+        Task<bool> AddUserSkill(UserSkills skills);
     }
 }

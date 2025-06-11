@@ -1,4 +1,5 @@
-﻿using Mission.Entities.Models.CommonModels;
+﻿using Mission.Entities;
+using Mission.Entities.Models.CommonModels;
 using Mission.Repositories.IRepositories;
 using Mission.Service.IServices;
 using System.Collections.Generic;
@@ -43,6 +44,14 @@ namespace Mission.Service.Services
         {
             return _commonRepository.MissionTitleList();
         }
+        public List<DropDownResponseModel> GetUserSkill(int userId)
+        {
+            return _commonRepository.GetUserSkill(userId);
+        }
 
+        public async Task<bool> AddUserSkill(UserSkills skills)
+        {
+            return await _commonRepository.AddUserSkill(skills);
+        }
     }
 }

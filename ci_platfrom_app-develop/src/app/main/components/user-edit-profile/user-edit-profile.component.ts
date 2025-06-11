@@ -316,7 +316,7 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
       cityId: [null, Validators.compose([Validators.required])],
       avilability: [''],
       linkdInUrl: [''],
-      mySkills: ['', Validators.compose([Validators.required])],
+      mySkills: [''],
       userImage: ['', Validators.compose([Validators.required])],
       userId: [''],
     });
@@ -359,7 +359,6 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
               linkdInUrl: [this.editData.linkdInUrl],
               mySkills: [
                 this.editData.mySkills.split(','),
-                Validators.compose([Validators.required]),
               ],
               userImage: [''],
               userId: [this.editData.userId],
@@ -390,7 +389,7 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
           duration: APP_CONFIG.toastDuration,
         })
     );
-    
+
   }
 
   async onSubmit() {
@@ -460,8 +459,21 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
     }
 
   }
-  contactUs: ContactUs;
-  changePass: ChangePassword;
+  contactUs: ContactUs = {
+    id: 0,
+    userId: 0,
+    name: "",
+    emailAddress: "",
+    subject: "",
+    message: "",
+  };;
+  changePass: ChangePassword = {
+    id: 0,
+    userId: 0,
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  };
 
   onSubmitContactUs(form: NgForm) {
     form.value.userId = this.contactUs.userId;

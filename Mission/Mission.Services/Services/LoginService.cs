@@ -52,19 +52,18 @@ namespace Mission.Services
             return await _loginRepository.UpdateUser(model);
         }
 
-        public async Task<UserProfileModel> GetUserProfileDetailById(int userId)
+        public async Task<UserProfileDetailsResponse> GetUserProfileDetailById(int userId)
         {
             return await _loginRepository.GetUserProfileDetailById(userId);
-        }
-
-        public async Task<string> UpdateUserProfile(UpdateUserProfileModel model)
-        {
-            return await _loginRepository.UpdateUserProfile(model);
         }
 
         public async Task<LoginUserResponseModel> GetLoginUserDetailById(int userId)
         {
             return await _loginRepository.GetLoginUserDetailById(userId);
+        }
+        public async Task<bool> LoginUserProfileUpdate(AddUserDetailsRequestModel requestModel)
+        {
+            return await _loginRepository.LoginUserProfileUpdate(requestModel);
         }
     }
 }

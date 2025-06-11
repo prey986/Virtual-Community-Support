@@ -1,6 +1,8 @@
-﻿using Mission.Entities.Models.CommonModels;
-using Mission.Repositories.IRepositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Mission.Entities;
 using Mission.Entities.Context;
+using Mission.Entities.Models.CommonModels;
+using Mission.Repositories.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -84,6 +86,40 @@ namespace Mission.Repositories.Repositories
 
             return missionSkill;
         }
+        public List<DropDownResponseModel> GetUserSkill(int userId)
+        {
+            var userSkill = _cIDbContext.UserSkills
+                .Where(m => m.UserId == userId)
+                .Select(m => new DropDownResponseModel(m.Id, m.Skill))
+                .ToList();
 
+            return userSkill;
+        }
+
+        public async Task<bool> AddUserSkill(UserSkills skills)
+        {
+            try
+            {
+                var existingSkill = await _cIDbContext.UserSkills
+                    .FirstOrDefaultAsync(us => us.UserId == skills.UserId);
+
+                if (existingSkill != null)
+                {
+                    existingSkill.Skill = skills.Skill;
+                    _cIDbContext.UserSkills.Update(existingSkill);
+                }
+                else
+                {
+                    await _cIDbContext.UserSkills.AddAsync(skills);
+                }
+
+                await _cIDbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

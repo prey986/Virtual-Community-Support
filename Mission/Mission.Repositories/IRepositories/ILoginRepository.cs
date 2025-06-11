@@ -13,10 +13,9 @@ namespace Mission.Repositories.IRepositories
 
         Task<string> UpdateUser(UpdateUserModel model);
 
-        Task<UserProfileModel> GetUserProfileDetailById(int userId);
-
-        Task<string> UpdateUserProfile(UpdateUserProfileModel model);
+        Task<UserProfileDetailsResponse> GetUserProfileDetailById(int userId);
 
         Task<LoginUserResponseModel> GetLoginUserDetailById(int userId);
+        Task<bool> LoginUserProfileUpdate(AddUserDetailsRequestModel requestModel);
     }
 }

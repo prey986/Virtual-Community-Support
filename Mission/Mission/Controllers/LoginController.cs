@@ -77,27 +77,27 @@ namespace Mission.Controllers
         }
 
         [HttpGet]
-        [Route("GetUserProfileDetailById")]
+        [Route("GetUserProfileDetailById/{userId}")]
         public async Task<ActionResult> GetUserProfileDetailById(int userId)
         {
             try
             {
                 var profile = await _loginService.GetUserProfileDetailById(userId);
-                return Ok(new ResponseResult() { Data = profile, Result = ResponseStatus.Success });
+                return Ok(new ResponseResult() { Data = profile, Result = ResponseStatus.Success,Message="" });
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseResult() { Data = null, Result = ResponseStatus.Error, Message = ex.Message });
+                return BadRequest(new ResponseResult() { Data = null, Result = ResponseStatus.Error, Message=ex.Message});
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("LoginUserProfileUpdate")]
-        public async Task<ActionResult> LoginUserProfileUpdate(UpdateUserProfileModel model)
+        public async Task<ActionResult> LoginUserProfileUpdate(AddUserDetailsRequestModel model)
         {
             try
             {
-                await _loginService.UpdateUserProfile(model);
+                await _loginService.LoginUserProfileUpdate(model);
                 return Ok(new ResponseResult() { Data = "Profile Updated Successfully", Result = ResponseStatus.Success });
             }
             catch (Exception ex)
