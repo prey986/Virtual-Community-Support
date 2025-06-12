@@ -139,34 +139,45 @@ namespace Mission.Api.Controllers
 
         [HttpPost]
         [Route("UploadImage")]
-        public async Task<ResponseResult> UploadImage([FromForm] List<IFormFile> files)
+        public async Task<ActionResult> UploadImage()
         {
             List<string> fileList = new List<string>();
-            if (files != null && files.Count > 0)
+            var files = Request.Form.Files;
+            try
             {
-                foreach (IFormFile file in files)
+                if (files != null && files.Count > 0)
                 {
-                    var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "UplodedImages", "MissionImages");
-
-                    if (!Directory.Exists(uploadFolder))
-                        Directory.CreateDirectory(uploadFolder);
-
-                    var name = Path.GetFileNameWithoutExtension(file.FileName);
-                    var ext = Path.GetExtension(file.FileName);
-
-                    var unique = name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ext;
-
-                    var filePath = Path.Combine(uploadFolder, unique);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    foreach (var file in files)
                     {
-                        await file.CopyToAsync(stream);
+                        var fName = file.FileName;
+                        var fPath = Path.Combine("UploadedImage", "Mission");
+                        string fileRootPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadMissionImage", "Mission");
+
+                        if (!Directory.Exists(fileRootPath))
+                        {
+                            Directory.CreateDirectory(fileRootPath);
+                        }
+
+                        string name = Path.GetFileNameWithoutExtension(fName);
+                        string extension = Path.GetExtension(fName);
+
+                        string fullFileName = name + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + extension;
+                        fPath = Path.Combine(fPath, fullFileName);
+                        string fullRootPath = Path.Combine(fileRootPath, fullFileName);
+                        using (var stream = new FileStream(fullRootPath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        fileList.Add(fPath);
                     }
-                    var fPath = Path.Combine("UplodedImages", "MissionImages", unique);
-                    fileList.Add(fPath);
                 }
+                return Ok(new { success = true, data = fileList });
             }
-            return new ResponseResult() { Data = fileList, Message = "Success", Result = ResponseStatus.Success };
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
         [HttpGet]
         [Route("GetUserSkill/{userId}")]
@@ -193,6 +204,7 @@ namespace Mission.Api.Controllers
             {
                 result.Data = await _commonService.AddUserSkill(skills);
                 result.Result = ResponseStatus.Success;
+                result.Message = "Skill Updated";
             }
             catch (Exception ex)
             {

@@ -192,7 +192,7 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
     const addUserSkillSubscribe = this._commonService.addUserSkill(value).subscribe(
       (data: any) => {
         if (data.result == 1) {
-          this._toast.success({ detail: 'SUCCESS', summary: data.data });
+          this._toast.success({ detail: 'SUCCESS', summary: data.message });
           setTimeout(() => {
             this.closeAddYourSkillModal();
           }, 1000);

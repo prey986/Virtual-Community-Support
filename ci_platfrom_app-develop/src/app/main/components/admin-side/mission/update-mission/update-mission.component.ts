@@ -219,47 +219,67 @@ export class UpdateMissionComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    this.formValid = true
-    const value = this.editMissionForm.value
-    let updateImageUrl = ""
-    var SkillLists = Array.isArray(value.missionSkillId) ? value.missionSkillId.join(",") : ""
-    value.missionSkillId = SkillLists
-
+    this.formValid = true;
+    const value = this.editMissionForm.value;
+  
+    // ✅ Convert missionSkillId (array) to comma-separated string
+    value.missionSkillId = Array.isArray(value.missionSkillId)
+      ? value.missionSkillId.join(",")
+      : value.missionSkillId;
+  
+    let updateImageUrl = "";
+  
     if (this.editMissionForm.valid) {
       if (this.isFileUpload) {
         await this._commonService
           .uploadImage(this.formData)
-          .pipe()
           .toPromise()
           .then(
             (res: any) => {
               if (res.success) {
-                updateImageUrl = res.data
+                // ✅ Join image paths into a comma-separated string
+                updateImageUrl = res.data.join(",");
               }
             },
-            (err) => this._toast.error({ detail: "ERROR", summary: err.error.message }),
-          )
+            (err) =>
+              this._toast.error({
+                detail: "ERROR",
+                summary: err.error.message,
+                duration: APP_CONFIG.toastDuration,
+              })
+          );
       }
-      if (this.isFileUpload) {
-        value.missionImages = updateImageUrl
-      } else {
-        value.missionImages = this.editData.missionImages
-      }
-      const updateMissionSubscription = this._service.updateMission(value).subscribe(
-        (data: any) => {
-          if (data.result == 1) {
-            //this.toastr.success(data.data);
-            this._toast.success({ detail: "SUCCESS", summary: data.message, duration: APP_CONFIG.toastDuration })
-            setTimeout(() => {
-              this._router.navigate(["admin/mission"])
-            }, 1000)
-          } else {
-            this._toastr.error(data.message)
-            // this._toast.error({detail:"ERROR",summary:data.message,duration:3000});
-          }
-        },
-        (err) => this._toast.error({ detail: "ERROR", summary: err.message, duration: APP_CONFIG.toastDuration }),
-      )
+  
+      // ✅ If new images uploaded, use those; else keep existing
+      value.missionImages = this.isFileUpload
+        ? updateImageUrl
+        : this.editData.missionImages;
+  
+      const updateMissionSubscription = this._service
+        .updateMission(value)
+        .subscribe(
+          (data: any) => {
+            if (data.result == 1) {
+              this._toast.success({
+                detail: "SUCCESS",
+                summary: data.message,
+                duration: APP_CONFIG.toastDuration,
+              });
+              setTimeout(() => {
+                this._router.navigate(["admin/mission"]);
+              }, 1000);
+            } else {
+              this._toastr.error(data.message);
+            }
+          },
+          (err) =>
+            this._toast.error({
+              detail: "ERROR",
+              summary: err.message,
+              duration: APP_CONFIG.toastDuration,
+            })
+        );
+  
       this.unsubscribe.push(updateMissionSubscription);
     }
   }

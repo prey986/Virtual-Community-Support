@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Mission.Entities.Context;
 using Mission.Repositories;
 using Mission.Repositories.Helpers;
@@ -56,11 +57,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "UploadMissionImage")),
+    RequestPath = "/UploadedImage"
+});
 app.UseHttpsRedirection();
 app.UseCors("MyPolicy");
 
 app.UseAuthorization();
+app.UseStaticFiles();
 
 app.MapControllers();
 
